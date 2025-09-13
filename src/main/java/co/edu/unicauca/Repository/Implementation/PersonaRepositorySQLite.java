@@ -40,15 +40,18 @@ public class PersonaRepositorySQLite implements PersonaRepository {
         if (rs.next()) {
             Persona persona = null;
             if(cargo==Cargo.Estudiante){
-                persona = new Estudiante(new Programa(1,"Ingenieria de sistemas",new Departamento(1,"SISTEMAS")),
-                        rs.getString("nombre"),
-                        rs.getString("apellido"),
-                        rs.getString("celular"),
-                        rs.getString("correoElectronico"),
-                        rs.getString("contrasenia"));  
+                persona = new Estudiante( new Programa("1", "Ingenieria de sistemas",new Departamento("1","SISTEMAS")),
+            rs.getInt("cantidadIntentosPractica"),
+            rs.getInt("cantidadIntentosInvestigacion"),
+            rs.getString("nombre"),
+            rs.getString("apellido"),
+            rs.getString("celular"),
+            rs.getString("correoElectronico"),
+            rs.getString("contrasenia"));
             }else if(cargo==Cargo.Profesor)
             {
-                persona = new Profesor(new Programa(1,"Ingenieria de sistemas",new Departamento(1,"SISTEMAS")),
+              persona = new Profesor(new Departamento(rs.getString("IdDepartamento"),
+                                        rs.getString("departamento")),
                         rs.getString("nombre"),
                         rs.getString("apellido"),
                         rs.getString("celular"),
@@ -56,13 +59,15 @@ public class PersonaRepositorySQLite implements PersonaRepository {
                         rs.getString("contrasenia"));  
             }else if(cargo==Cargo.Coordinador)
             {
-                persona = new Coordinador(new Programa(1,"Ingenieria de sistemas",new Departamento(1,"SISTEMAS")),
-                        new LinkedList(),
-                        rs.getString("nombre"),
-                        rs.getString("apellido"),
-                        rs.getString("celular"),
-                        rs.getString("correoElectronico"),
-                        rs.getString("contrasenia"));  
+                persona = new Coordinador(new Programa(rs.getString("IdPrograma"),
+                                       rs.getString("nombrePrograma"),
+                                       new Departamento(rs.getString("IdDepartamento"),
+                                                        rs.getString("departamento"))),
+                          rs.getString("nombre"),
+                          rs.getString("apellido"),
+                          rs.getString("celular"),
+                          rs.getString("correoElectronico"),
+                          rs.getString("contrasenia"));  
             }
             return persona;
         }
